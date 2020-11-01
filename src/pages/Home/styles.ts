@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(10),
   },
   card: {
     display: 'flex',
@@ -10,6 +10,10 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 0),
     [theme.breakpoints.down('xs')]: {
       flexWrap: 'wrap',
+      textAlign: 'center',
+      '& a': {
+        margin: '0 auto',
+      },
     },
   },
   unavailableCardMedia: {

@@ -14,7 +14,7 @@ export const App: FC = () => {
 
   return (
     <div className="App">
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6">Ludothèque de Châtillon</Typography>
           <div className={classes.search}>
