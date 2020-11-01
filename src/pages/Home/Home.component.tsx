@@ -43,8 +43,9 @@ export const Home: FC<HomeProps> = ({ searchInput }) => {
         <a href="mailto:jeunesse.ludo@chatillon92.fr">
           jeunesse.ludo@chatillon92.fr
         </a>{' '}
-        en précisant le nom du jeu. Si le jeu est indisponible, vous serez mis
-        sur liste d'attente.
+        en précisant le nom du jeu et la date à laquelle vous viendrez le
+        chercher. Si le jeu est indisponible, vous serez mis sur liste
+        d'attente.
       </Typography>
       {!filteredList.length && (
         <Card className={classes.card} elevation={3}>
