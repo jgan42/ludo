@@ -36,12 +36,15 @@ export const Home: FC<HomeProps> = ({ searchInput }) => {
     <Container maxWidth="md" className={classes.container}>
       <Typography variant="h4">Liste des jeux disponibles</Typography>
       <Typography variant="body1">
-        Vous pouvez emprunter un jeu sur réservation, soit par téléphone au
-        01.XX.XX.XX.XX ou par mail en cliquant sur le bouton "réserver" ou
-        directement à{' '}
-        <a href="mailto:test-fyguhij@gmail.com">test-fyguhij@gmail.com</a> en
-        précisant le nom du jeu. Si le jeu est indisponible, vous serez mis sur
-        liste d'attente.
+        Vous pouvez emprunter un jeu sur réservation, par téléphone au{' '}
+        <a href="tel:+33147357799">01 47 35 77 99</a> /{' '}
+        <a href="tel:+33616085546">06 16 08 55 46</a>, par mail en cliquant sur
+        le bouton "réserver" ou directement à{' '}
+        <a href="mailto:jeunesse.ludo@chatillon92.fr">
+          jeunesse.ludo@chatillon92.fr
+        </a>{' '}
+        en précisant le nom du jeu. Si le jeu est indisponible, vous serez mis
+        sur liste d'attente.
       </Typography>
       {!filteredList.length && (
         <Card className={classes.card} elevation={3}>
@@ -53,9 +56,9 @@ export const Home: FC<HomeProps> = ({ searchInput }) => {
           `Reservation de "${name}"${availableAt ? " Liste d'attente" : ''}`,
         );
         const mailBody = encodeURIComponent(
-          `Bonjour, je souhaite réserver "${name}".\n Merci.`,
+          `Bonjour, je souhaite réserver "${name}".\n\nJe pourrais venir le chercher le [MERCI RENSEIGNER LA DATE]\n\nMerci.`,
         );
-        const mailTo = `mailto:test-fcvghbjhknj@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+        const mailTo = `mailto:jeunesse.ludo@chatillon92.fr?subject=${mailSubject}&body=${mailBody}`;
         const bookGame = (e: any) => {
           if (availableAt) {
             const confirm = window.confirm(
