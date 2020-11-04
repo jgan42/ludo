@@ -7,30 +7,15 @@ import {
   Container,
   Typography,
 } from '@material-ui/core';
-import { database } from 'firebase';
 import { useStyles } from './styles';
-import { useGetList } from '../../firebase/useGetList';
-
-interface Game {
-  name: string;
-  availableAt?: string;
-  description: string;
-  image: string;
-}
+import { Game } from '../../App';
 
 interface HomeProps {
-  searchInput: string;
+  gameList: Game[];
 }
 
-export const Home: FC<HomeProps> = ({ searchInput }) => {
-  const ref = database().ref('game-list');
-
+export const Home: FC<HomeProps> = ({ gameList }) => {
   const classes = useStyles();
-  const gameList = useGetList<Game>(ref);
-  const filteredList = gameList.filter(
-    ({ name, description }) =>
-      !searchInput || name.match(searchInput) || description.match(searchInput),
-  );
 
   return (
     <Container maxWidth="md" className={classes.container}>
@@ -47,12 +32,12 @@ export const Home: FC<HomeProps> = ({ searchInput }) => {
         chercher. Si le jeu est indisponible, vous serez mis sur liste
         d'attente.
       </Typography>
-      {!filteredList.length && (
+      {!gameList.length && (
         <Card className={classes.card} elevation={3}>
           Aucun résultat =(
         </Card>
       )}
-      {filteredList.map(({ name, description, availableAt, image }) => {
+      {gameList.map(({ name, description, availableAt, image }) => {
         const mailSubject = encodeURIComponent(
           `Reservation de "${name}"${availableAt ? " Liste d'attente" : ''}`,
         );
