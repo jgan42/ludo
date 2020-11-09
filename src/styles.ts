@@ -24,6 +24,9 @@ export const useStyles = makeStyles((theme) => ({
   categorySelect: {
     paddingLeft: theme.spacing(2),
     color: 'white',
+    '& option': {
+      backgroundColor: 'grey !important',
+    },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),

@@ -19,7 +19,11 @@ export const Home: FC<HomeProps> = ({ gameList }) => {
 
   return (
     <Container maxWidth="md" className={classes.container}>
-      <Typography variant="h4">Liste des jeux disponibles</Typography>
+      <Typography variant="h4">
+        Liste des jeux disponibles (
+        {gameList.filter(({ availableAt }) => !availableAt).length}/
+        {gameList.length})
+      </Typography>
       <Typography variant="body1">
         Vous pouvez emprunter un jeu sur réservation, par téléphone au{' '}
         <a href="tel:+33147357799">01 47 35 77 99</a> /{' '}
@@ -42,7 +46,7 @@ export const Home: FC<HomeProps> = ({ gameList }) => {
           `Reservation de "${name}"${availableAt ? " Liste d'attente" : ''}`,
         );
         const mailBody = encodeURIComponent(
-          `Bonjour, je souhaite réserver "${name}".\n\nJe pourrais venir le chercher le [MERCI RENSEIGNER LA DATE]\n\nMerci.`,
+          `Bonjour, je souhaite réserver "${name}".\n\nMerci.`,
         );
         const mailTo = `mailto:jeunesse.ludo@chatillon92.fr?subject=${mailSubject}&body=${mailBody}`;
         const bookGame = (e: any) => {
