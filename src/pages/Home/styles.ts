@@ -7,13 +7,16 @@ export const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
+    height: 200,
     margin: theme.spacing(2, 0),
     [theme.breakpoints.down('xs')]: {
       flexWrap: 'wrap',
       textAlign: 'center',
-      '& a': {
+      '& button': {
         margin: '0 auto',
       },
+      height: 378,
     },
   },
   unavailableCardMedia: {

@@ -12,7 +12,14 @@ import { useStyles } from './styles';
 import { Search } from '@material-ui/icons';
 import { useGetList } from './firebase/useGetList';
 
+const normalizeString = (str?: string) =>
+  str
+    ?.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase() || '';
+
 export interface Game {
+  id: string;
   name: string;
   availableAt?: string;
   description: string;
@@ -28,12 +35,13 @@ export const App: FC = () => {
   const gameList = useGetList<Game>(ref);
   const categories = Array.from(
     new Set(gameList.map(({ category }) => category)),
-  ).filter((e) => e);
+  );
+
   const filteredList = gameList.filter(
     ({ name, description, category }) =>
       (!searchInput ||
-        name.match(searchInput) ||
-        description.match(searchInput)) &&
+        normalizeString(name).match(normalizeString(searchInput)) ||
+        normalizeString(description).match(normalizeString(searchInput))) &&
       (selectedCategory === 'ALL' ||
         (!selectedCategory && !category) ||
         selectedCategory === category),
@@ -66,9 +74,8 @@ export const App: FC = () => {
             onChange={(e) => selectCategory(e.target.value as string)}
           >
             <option value="ALL">Toutes</option>
-            <option value="">Hors catégories</option>
             {categories.map((name) => (
-              <option value={name}>{name}</option>
+              <option value={name}>{name || 'Hors catégories'}</option>
             ))}
           </Select>
         </Toolbar>
