@@ -69,15 +69,18 @@ export const Home: FC<HomeProps> = ({ gameList }) => {
       </Typography>
       <Typography variant="body1">
         Vous pouvez emprunter un jeu sur réservation, par téléphone au{' '}
-        <a href="tel:+33147357799">01 47 35 77 99</a> /{' '}
-        <a href="tel:+33616085546">06 16 08 55 46</a>, par mail en cliquant sur
-        le bouton "réserver" ou directement à{' '}
+        <a href="tel:+33147357799">0147357799</a> /{' '}
+        <a href="tel:+33616085546">0616085546</a>, par mail en cliquant sur
+        "Réserver par email" ou directement à{' '}
         <a href="mailto:jeunesse.ludo@chatillon92.fr">
           jeunesse.ludo@chatillon92.fr
         </a>{' '}
-        en précisant le nom du jeu et la date à laquelle vous viendrez le
-        chercher. Si le jeu est indisponible, vous serez mis sur liste
-        d'attente.
+        en précisant le nom du jeu.
+        <div>
+          On vous recontactera quand votre réservation sera prête et vous
+          pourrez venir la chercher dans un délai de 7 jours à compter de la
+          date de confirmation du mardi au samedi de 14h à 18h.
+        </div>
       </Typography>
       {error && (
         <Card className={classes.card} elevation={3}>
