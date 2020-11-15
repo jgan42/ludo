@@ -9,8 +9,14 @@ import {
 } from '@material-ui/core';
 import { useStyles } from './styles';
 import { Game } from '../../App';
+import { analytics } from 'firebase/app';
 
-const bookGame = (name: string, availableAt?: string) => {
+const bookGame = (
+  name: string,
+  availableAt: string | undefined,
+  item_id: string,
+  content_type: string,
+) => {
   if (availableAt) {
     const confirm = window.confirm(
       `"${name}" est actuellement indisponible, voulez vous vous inscrire à la liste d'attente ?`,
@@ -25,6 +31,7 @@ const bookGame = (name: string, availableAt?: string) => {
   const mailBody = encodeURIComponent(
     `Bonjour, je souhaite réserver "${name}".\n\nMerci.`,
   );
+  analytics().logEvent('select_content', { item_id, content_type });
   window.location.href = `mailto:jeunesse.ludo@chatillon92.fr?subject=${mailSubject}&body=${mailBody}`;
 };
 
@@ -85,39 +92,44 @@ export const Home: FC<HomeProps> = ({ gameList }) => {
           Aucun résultat =(
         </Card>
       )}
-      {gameList.map(({ name, description, availableAt, image }, i) => (
-        <Card key={name} className={classes.card} elevation={3}>
-          {i >= hideStart && i < hideStart + 30 && (
-            <>
-              <span
-                className={availableAt ? classes.unavailableCardMedia : ''}
-                data-text={`Déjà emprunté jusqu'au\n${availableAt}\n(date approximative)`}
-              >
-                <CardMedia
-                  className={classes.cardMedia}
-                  image={image}
-                  title={name}
-                />
-              </span>
-              <CardContent className={classes.cardContent}>
-                <Typography variant="h5">{name}</Typography>
-                <Typography variant="body1" className={classes.cardDescription}>
-                  {description}
-                </Typography>
-                <Button
-                  className={classes.cardButton}
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                  onClick={() => bookGame(name, availableAt)}
+      {gameList.map(
+        ({ id, name, description, availableAt, image, category }, i) => (
+          <Card key={id} className={classes.card} elevation={3}>
+            {i >= hideStart && i < hideStart + 30 && (
+              <>
+                <span
+                  className={availableAt ? classes.unavailableCardMedia : ''}
+                  data-text={`Déjà emprunté jusqu'au\n${availableAt}\n(date approximative)`}
                 >
-                  Réserver par email
-                </Button>
-              </CardContent>
-            </>
-          )}
-        </Card>
-      ))}
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image={image}
+                    title={name}
+                  />
+                </span>
+                <CardContent className={classes.cardContent}>
+                  <Typography variant="h5">{name}</Typography>
+                  <Typography
+                    variant="body1"
+                    className={classes.cardDescription}
+                  >
+                    {description}
+                  </Typography>
+                  <Button
+                    className={classes.cardButton}
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    onClick={() => bookGame(name, availableAt, id, category)}
+                  >
+                    Réserver par email
+                  </Button>
+                </CardContent>
+              </>
+            )}
+          </Card>
+        ),
+      )}
     </Container>
   );
 };

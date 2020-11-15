@@ -6,7 +6,7 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import { database } from 'firebase';
+import { database, analytics } from 'firebase/app';
 import { Home } from './pages/Home';
 import { useStyles } from './styles';
 import { Search } from '@material-ui/icons';
@@ -59,7 +59,11 @@ export const App: FC = () => {
               <Search />
             </div>
             <InputBase
-              onChange={(e) => setSearchInput(e.target.value)}
+              onChange={(e) => {
+                const search_term = e.target.value || '';
+                setSearchInput(search_term);
+                analytics().logEvent('search', { search_term });
+              }}
               placeholder="Rechercher..."
               classes={{
                 root: classes.inputRoot,
@@ -71,11 +75,17 @@ export const App: FC = () => {
             className={`${classes.search} ${classes.categorySelect}`}
             native
             value={selectedCategory}
-            onChange={(e) => selectCategory(e.target.value as string)}
+            onChange={(e) => {
+              const search_term = (e.target.value as string) || '';
+              selectCategory(search_term);
+              analytics().logEvent('search', { search_term });
+            }}
           >
             <option value="ALL">Toutes</option>
             {categories.map((name) => (
-              <option value={name}>{name || 'Hors catégories'}</option>
+              <option key={name || 'Hors catégories'} value={name}>
+                {name || 'Hors catégories'}
+              </option>
             ))}
           </Select>
         </Toolbar>
