@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: 35,
   },
-  categorySelect: {
+  select: {
     paddingLeft: theme.spacing(2),
     color: 'white',
     '& option': {
